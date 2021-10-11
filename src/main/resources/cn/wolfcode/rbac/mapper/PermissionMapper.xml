@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wolfcode.rbac.mapper.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="cn.wolfcode.rbac.domain.Permission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="expression" property="expression" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.wolfcode.rbac.domain.Permission" useGeneratedKeys="true" keyProperty="id" >
+    insert into permission (name, expression)
+    values (#{name,jdbcType=VARCHAR}, #{expression,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.wolfcode.rbac.domain.Permission" >
+    update permission
+    set name = #{name,jdbcType=VARCHAR},
+      expression = #{expression,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, name, expression
+    from permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, expression
+    from permission
+  </select>
+  <select id="selectByPage" parameterType="cn.wolfcode.rbac.domain.PageParam" resultMap="BaseResultMap">
+    select * from permission limit #{start},#{pageSize}
+  </select>
+  <select id="selectCount" resultType="int">
+    select count(*) from permission
+  </select>
+  <select id="selectByRid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    SELECT p.*
+    from permission p
+    LEFT JOIN role_permission rp on p.id=rp.permission_id
+    LEFT JOIN role r on r.id=rp.role_id where r.id=#{id};
+  </select>
+</mapper>
