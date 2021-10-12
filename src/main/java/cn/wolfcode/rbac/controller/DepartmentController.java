@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/department")
 public class DepartmentController {
@@ -22,20 +20,11 @@ public class DepartmentController {
     @RequestMapping("/list")
     public String list(Model model, PageParam pageParam){
 
-
         // step 1: 从数据库中把所有部门查询出来
         //分页查询部门信息
         PageResult pageResult = departmentService.findByPage(pageParam);
-
         model.addAttribute("pageResult",pageResult);
 
-
-//        List<Department> departments = departmentService.findAll();
-        // step 2: 把departments存入model,model中的数据可以被页面直接访问
-//        model.addAttribute("departments",departments);
-
-        // step 3: 页面跳转(请求转发)
-        // return "forward:/WEB-INF/views/department/list.jsp";
         return "department/list";
     }
 

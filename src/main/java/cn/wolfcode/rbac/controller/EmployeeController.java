@@ -35,20 +35,9 @@ public class EmployeeController {
         PageResult pageResult = employeeService.findByPage(employeeParam);
         model.addAttribute("pageResult", pageResult);
 
-
-        //条件查询员工信息
-//        List<Employee> employeeList = employeeService.findByCondition(employeeParam);
-
-//        //查询所有的员工信息
-//        List<Employee> employeeList = employeeService.findAll();
-//
-//        //将集合存储到model中
-//        model.addAttribute("employeeList",employeeList);
-
         //查询所有的部门信息
         List<Department> departmentList = departmentService.findAll();
         model.addAttribute("departmentList", departmentList);
-
 
         //跳转employee下list.jsp
         return "/employee/list";
