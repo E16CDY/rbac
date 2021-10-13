@@ -68,13 +68,7 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public Role findByRid(Long id) {
-            Role role = roleMapper.selectByPrimaryKey(id);
-        try {
-            List<Permission> permissions = permissionMapper.selectByRid(id);
-            role.setPermissions(permissions);
-        } catch (Exception e) {
-        }
+        Role role = roleMapper.selectByPrimaryKey(id);
         return role;
-
     }
 }

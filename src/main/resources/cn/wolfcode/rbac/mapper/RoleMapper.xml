@@ -6,9 +6,8 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="sn" property="sn" jdbcType="VARCHAR" />
     <collection property="permissions" ofType="cn.wolfcode.rbac.domain.Permission">
-      <id column="pId" property="id"/>
-      <result column="pName" property="name"/>
-      <result column="pSn" property="expression"/>
+      <id column="pid" property="id"/>
+      <result column="pname" property="name"/>
     </collection>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
@@ -26,7 +25,10 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    SELECT * from role where id=#{id}
+    SELECT r.*,p.id pid,p.name pname from role r
+    LEFT JOIN role_permission rp on r.id=rp.role_id
+    LEFT JOIN permission p on rp.permission_id=p.id
+    where r.id=#{id}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select * from role
