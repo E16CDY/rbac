@@ -17,4 +17,7 @@ public interface IPermissionService {
     //查询所有
     List<Permission> findAll();
 
+    //重新加载
+    void reload();
+
 }

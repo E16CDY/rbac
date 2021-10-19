@@ -5,6 +5,7 @@ import cn.wolfcode.rbac.domain.Department;
 import cn.wolfcode.rbac.domain.PageParam;
 import cn.wolfcode.rbac.service.IDepartmentService;
 import cn.wolfcode.rbac.utils.PageResult;
+import cn.wolfcode.rbac.utils.RequiredPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ public class DepartmentController {
     private IDepartmentService departmentService;
 
     @RequestMapping("/list")
+    @RequiredPermission({"部门列表","department:list"})
     public String list(Model model, PageParam pageParam){
 
         // step 1: 从数据库中把所有部门查询出来
@@ -29,6 +31,7 @@ public class DepartmentController {
     }
 
     @RequestMapping("/input")
+    @RequiredPermission({"部门添加","department:input"})
     public String input(Long id,Model model){
 
         // step 1： 查询指定id的部门
@@ -40,6 +43,7 @@ public class DepartmentController {
     }
 
     @RequestMapping("/saveOrUpdate")
+    @RequiredPermission({"部门保存或更新","department:saveOrUpdate"})
     public String saveOrUpdate(Department department) {
         // step 1：添加操作 或者 更新操作
         departmentService.saveOrUpdate(department);
@@ -48,6 +52,7 @@ public class DepartmentController {
     }
 
     @RequestMapping("/delete")
+    @RequiredPermission({"部门删除","department:delete"})
     public String delete(Long id){
         // step 1: 删除指定id的部门
         departmentService.delete(id);
