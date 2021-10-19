@@ -33,6 +33,7 @@ public class PermissionController {
     }
 
     @RequestMapping("delete")
+    @RequiredPermission({"权限删除","permission:delete"})
     public String delete(Long id) {
         permissionService.deleteById(id);
         return "redirect:/permission/list";
